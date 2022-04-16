@@ -3,21 +3,35 @@ package com.example.mvvmretrofit
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.mvvmretrofit.CovidApi.Companion.TOKEN
 import com.example.mvvmretrofit.databinding.ActivityMainBinding
+import com.example.mvvmretrofit.viewmodel.CovidViewModel
 
 //메인 액티비티
 class MainActivity : AppCompatActivity() {
 
-//    private lateinit var covidViewAdapter: CovidViewAdapter
+    private lateinit var covidViewAdapter: CovidViewAdapter
 //    private lateinit var covidList: MutableList<CovidVO>
 
     lateinit var binding: ActivityMainBinding
+    lateinit var covidViewModel: CovidViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        covidViewModel = ViewModelProvider(this).get(CovidViewModel::class.java)
+        covidViewModel.liveStateVo.observe(this, Observer {
+            covidViewModel.getAll(TOKEN)
+        })
+
+
     }
+
 
 
 //        covidService
