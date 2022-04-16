@@ -1,27 +1,30 @@
 package com.example.mvvmretrofit
 
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CovidViewAdapter(var covidList: MutableList<CovidVO>): RecyclerView.Adapter<CovidViewAdapter.CovidHolder?>() {
+class CovidViewAdapter: RecyclerView.Adapter<CovidViewAdapter.CovidHolder?>() {
 
-    fun setList(covidList: MutableList<CovidVO>){
-        this.covidList = covidList
+    private val covidList: ArrayList<CovidVO?> = arrayListOf()
+
+    fun setList(covidList: ArrayList<CovidVO?>){
+//        notifyDataSetChanged()
+        this.covidList.addAll(covidList)
+        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): CovidViewAdapter.CovidHolder {
+    ): CovidHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_api,parent, false)
         return CovidHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CovidViewAdapter.CovidHolder, position: Int) {
+    override fun onBindViewHolder(holder: CovidHolder, position: Int) {
         holder.txtCountry.text = covidList[position]?.countryName ?: "null"
         holder.txtNewCase.text = "신규확진자 수 : ${covidList[position]?.newCase}" ?: "null"
         holder.txtTotalCase.text = "확진자 수 : ${covidList[position]?.totalCase}"  ?: "null"
