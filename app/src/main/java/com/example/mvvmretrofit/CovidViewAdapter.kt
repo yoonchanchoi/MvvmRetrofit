@@ -11,8 +11,9 @@ class CovidViewAdapter: RecyclerView.Adapter<CovidViewAdapter.CovidHolder?>() {
     private val covidList: ArrayList<CovidVO?> = arrayListOf()
 
     fun setList(covidList: ArrayList<CovidVO?>){
-        covidList.addAll(covidList)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        this.covidList.addAll(covidList)
+        this.notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(
