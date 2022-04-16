@@ -28,9 +28,6 @@ class CovidViewModel(private val repo: CovidRepository) :ViewModel(){
     fun getAll(key: String){
         repo.getCovidInfo(key).enqueue(object : Callback<StateVO>{
             override fun onResponse(call: Call<StateVO>, response: Response<StateVO>) {
-                //Log.d("성공성공!", response!!.body().toString())
-
-                response.body()?.let {
                     val regionList = arrayListOf(
                         response.body()?.korea,
                         response.body()?.seoul,
@@ -52,13 +49,13 @@ class CovidViewModel(private val repo: CovidRepository) :ViewModel(){
                         response.body()?.jeju,
                         response.body()?.quarantine
                     )
+                Log.d("성공성공!", regionList.toString())
                     _liveCovidVo.postValue(regionList)
-                } ?: kotlin.run {
-                    _liveToast.postValue("null 오류")
-                }
+
             }
 
             override fun onFailure(call: Call<StateVO>, t: Throwable) {
+                Log.d("실패실패..", "${t.localizedMessage.toString()}")
                     Log.d("실패실패..", "${t.message.toString()}")
                 _liveToast.postValue(t.localizedMessage)
             }
@@ -67,16 +64,5 @@ class CovidViewModel(private val repo: CovidRepository) :ViewModel(){
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
