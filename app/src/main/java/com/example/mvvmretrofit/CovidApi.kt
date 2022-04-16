@@ -1,9 +1,5 @@
 package com.example.mvvmretrofit
 
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Query
-
 class CovidApi {
     companion object{
         val DOMAIN = "https://api.corona-19.kr"
